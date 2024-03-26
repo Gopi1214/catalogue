@@ -40,23 +40,6 @@ pipeline {
                 """
             }
         }
-        // stage('destroy') {
-        //     when {
-        //         expression {
-        //             params.option == "destroy"
-        //         }
-        //     }
-        //     input {
-        //         message "Should we continue?"
-        //         ok "Yes, we should."
-        //     }
-        //     steps {
-        //         sh """
-        //            cd 01-vpc
-        //            terraform destroy -auto-approve
-        //         """
-        //     }
-        // }
     }
     // Post Build
     post { 
