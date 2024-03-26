@@ -59,11 +59,6 @@ pipeline {
                 )
             }
         }
-        stage('deploy') {
-            steps {
-                 echo "here i wrote shell script"
-            }
-        }
     }
     // Post Build
     post { 
