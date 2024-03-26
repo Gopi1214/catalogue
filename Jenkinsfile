@@ -1,47 +1,37 @@
 pipeline {
-    agent {
-        node {
-            label 'AGENT-1'
-        }
+    agent { 
+        node { 
+            label 'AGENT-1' 
+        } 
+    }
+    options {
+        // ansiColor('xterm')
+        timeout(time: 1, unit: 'HOURS')
+        disableConcurrentBuilds()
     }
     environment { 
         packageVersion = ''
         nexusURL = '172.31.94.66:8081'
     }
-    options {
-        timeout(time: 1, unit: 'HOURS')
-        disableConcurrentBuilds()
-    }
-    // parameters {
-    //     // string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-
-    //     // text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
-
-    //     booleanParam(name: 'Deploy', defaultValue: false, description: 'Toggle this value')
-
-    //     // choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
-
-    //     // password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
-    // }
-    // build
+    // Build
     stages {
-        stage('Get the version') {
+        stage('Get the app version') { 
             steps {
                 script {
-                    def packageJson = readJSON file: 'package.json'
+                    def packageJson = readJSON file: 'package.json'  // variable initialisation using def
                     packageVersion = packageJson.version
-                    echo "application version: $packageVersion"
+                    echo "application_version: $packageVersion"
                 }
             }
         }
-        stage('Install dependencies') {
+        stage('Install dependencies') { 
             steps {
                 sh """
-                    npm install
+                   npm install
                 """
             }
         }
-        stage('Build') {
+         stage('Build') {
             steps {
                 sh """
                     ls -la
@@ -69,29 +59,32 @@ pipeline {
                 )
             }
         }
-        stage('Deploy') {
+        stage ('Invoke_pipeline') {
             steps {
-                script {
-                        def params = [
-                            string(name: 'version', value: "$packageVersion"),
-                            string(name: 'environment', value: "dev")
+                script{
+                       def params = [
+                           string(name: 'version', value: "${packageVersion}"),
+                           string(name: 'environment', value: "dev")
                         ]
-                        build job: "catalogue-deploy", wait: true, parameters: params
-                    }
+                       build job: 'catalogue-deploy', wait: true, parameters: params
+                }
             }
         }
     }
-    // post build
+    // Post Build
     post { 
         always { 
             echo 'I will always say Hello again!'
             deleteDir()
         }
         failure { 
-            echo 'this runs when pipeline is failed, used generally to send some alerts'
+            echo 'I will run when the job has failed!'
         }
-        success{
-            echo 'I will say Hello when pipeline is success'
+        success { 
+            echo 'I will run when the job is success!'
+        }
+        aborted { 
+            echo 'I will run when the job is aborted manually!'
         }
     }
 }
