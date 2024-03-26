@@ -31,12 +31,12 @@ pipeline {
                 """
             }
         }
-        stage('Build a zip file') { 
+         stage('Build') {
             steps {
                 sh """
-                   ls -la
-                   zip -q -r catalogue.zip ./* -x ".git" -x "*.zip"
-                   ls -ltr
+                    ls -la
+                    zip -q -r catalogue.zip ./* -x ".git" -x "*.zip"
+                    ls -ltr
                 """
             }
         }
