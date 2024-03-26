@@ -11,6 +11,7 @@ pipeline {
     }
     environment { 
         packageVersion = ''
+        nexusURL = "http://44.203.40.204:8081/repository/catalogue/"
     }
     // Build
     stages {
@@ -61,7 +62,7 @@ pipeline {
     post { 
         always { 
             echo 'I will always say Hello again!'
-            deleteDir()
+            // deleteDir()
         }
         failure { 
             echo 'I will run when the job has failed!'
