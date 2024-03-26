@@ -40,24 +40,23 @@ pipeline {
                 """
             }
         }
-        stage('Publish Artifact') { 
+        stage('Publish Artifact') {
             steps {
-                nexusArtifactUploader(
+                 nexusArtifactUploader(
                     nexusVersion: 'nexus3',
                     protocol: 'http',
                     nexusUrl: "${nexusURL}",
                     groupId: 'com.roboshop',
                     version: "${packageVersion}",
                     repository: 'catalogue',
-                    credentialsId: 'nexus_auth',
+                    credentialsId: 'nexus-auth',
                     artifacts: [
-                        [artifactId: catalogue,
+                        [artifactId: 'catalogue',
                         classifier: '',
                         file: 'catalogue.zip',
                         type: 'zip']
                     ]
                 )
-
             }
         }
     }
