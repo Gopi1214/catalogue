@@ -11,7 +11,7 @@ pipeline {
     }
     environment { 
         packageVersion = ''
-        nexusURL = '172.31.94.66:8081'
+        nexusURL = '172.31.93.48:8081'
     }
     // Build
     stages {
