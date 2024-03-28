@@ -13,6 +13,9 @@ pipeline {
         packageVersion = ''
         nexusURL = '172.31.93.48:8081'
     }
+    parameters {
+        booleanParam(name: 'Deploy', defaultValue: false, description: 'Toggle this value')
+    }
     // Build
     stages {
         stage('Get the app version') { 
@@ -60,6 +63,11 @@ pipeline {
             }
         }
         stage ('Invoke_pipeline') {
+            when {
+                expression {
+                    params.Deploy == "true"
+                }
+            }
             steps {
                 script{
                        def params = [
