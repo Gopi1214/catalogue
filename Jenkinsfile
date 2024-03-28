@@ -11,7 +11,7 @@ pipeline {
     }
     environment { 
         packageVersion = ''
-        nexusURL = '172.31.93.48:8081'
+        nexusURL = '172.31.88.3:8081'
     }
     parameters {
         booleanParam(name: 'Deploy', defaultValue: false, description: 'Toggle this value')
